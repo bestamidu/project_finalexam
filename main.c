@@ -5,11 +5,10 @@
 #define MAX 50 
 #include "function.h"
 int main(){
-	
 	int choice;
 	int size =0;
 	Category mycategory[MAX];
-	readCategoriesFromFile( mycategory, 9999999 , "category.dat" );
+	size = readFromFile("categories.dat", mycategory);
 	do{
 		mainMenu();
 		scanf("%d",&choice);
@@ -28,4 +27,5 @@ int main(){
 		     	break;
 		}
 	}while(choice!=0);
-}
+}                                 
+                                  

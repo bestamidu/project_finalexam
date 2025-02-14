@@ -69,7 +69,8 @@ void showCategoryList(Category mycategory[], int size) {
     }
     mycategory[*size]= newCategory;
 	(*size)++;
-	writeCategoriesToFile(mycategory,  size, "category.dat");
+	
+	writeToFile("categories.dat", mycategory, *size);
 	printf("\nban da them ID va Name thanh cong cho category!!!\n");
     printf("\n============================================\n");
       char choice;
@@ -94,7 +95,7 @@ void editCategory(Category mycategory[], int size) {
     printf("\nNhap id ban muon sua category: ");
     scanf("%5s", id);
     while (getchar() != '\n');  // Xóa bộ nhớ đệm tránh lỗi nhập
-
+	int success = 0;
     for (int i = 0; i < size; i++) {
       if (strcmp(mycategory[i].categoryId, id) == 0) {
             found = 1;
@@ -120,11 +121,14 @@ void editCategory(Category mycategory[], int size) {
                 return;
             }
             strcpy(mycategory[i].categoryName, newName);
-
             printf("Danh muc da duoc sua thanh cong!\n");
+            success = 1;
             break;
         }
     }
+    if(success == 1){
+		writeToFile("categories.dat", mycategory, (size));
+	}
 
     if (!found) {
         printf("Thong tin ID ban nhap khong chinh xac.\n");
@@ -169,8 +173,9 @@ void editCategory(Category mycategory[], int size) {
 		for(int j =i;j < *size-1 ;j++){	
 		mycategory[j]=mycategory[j+1];
 	}
-	printf("Danh muc da duoc xoa thanh cong");
 		(*size)--;
+		writeToFile("categories.dat", mycategory, *size);
+		printf("Danh muc da duoc xoa thanh cong");
 	}else{
 		printf("Huy Thao tac xoa");
 	}
@@ -292,37 +297,30 @@ void editCategory(Category mycategory[], int size) {
     }
     return 0;
 }
-void writeCategoriesToFile(Category mycategory[], int size, const char *filename) {
-    FILE *file = fopen(filename, "wb"); 
-    if (file == NULL) {
-        printf("Khong the mo file de ghi!\n");
-        return;
+
+void writeToFile(const char *filename, Category *categories, int size) {
+    FILE *file = fopen(filename, "wb");
+    if (file) {
+        fwrite(&size, sizeof(int), 1, file);  // Save the size
+        fwrite(categories, sizeof(Category), size, file);
+        fclose(file);
+        printf("Luu du lieu thanh cong.\n");
+    } else {
+        printf("Loi mo file!\n");
     }
-
-//    fwrite(&size, sizeof(int), 1, file); 
-    fwrite(mycategory, sizeof(Category), size, file); 
-
-    fclose(file);
-    printf("Ghi danh muc vao file thanh cong!\n");
 }
-int readCategoriesFromFile(Category mycategory[], int maxSize, const char *filename) {
-    FILE *file = fopen(filename, "rb"); 
-    if (file == NULL) {
-        printf("Khong the mo file de doc!\n");
-        return 0;
+
+
+int readFromFile(const char *filename, Category *categories) {
+    int size = 0;
+    FILE *file = fopen(filename, "rb");
+    if (file) {
+        fread(&size, sizeof(int), 1, file);  // Read the size
+        fread(categories, sizeof(Category), size, file);
+        fclose(file);
+        printf("Load data tu file thanh cong.\n");
+    } else {
+        printf("Loi doc file!\n");
     }
-
-    int size;
-    fread(&size, sizeof(int), 1, file); 
-//    printf(size);
-//    if (size > maxSize) {
-//        printf("Du lieu trong file lon hon bo nho cho phep!\n");
-//        fclose(file);
-//        return 0;
-//    }
-    fread(mycategory, sizeof(Category), size, file); 
-
-    fclose(file);
-    printf("Doc danh muc tu file thanh cong!\n");
-    return size; 
+    return size;  // Return the number of elements read
 }
