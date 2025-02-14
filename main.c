@@ -9,19 +9,23 @@ int main(){
 	int choice;
 	int size =0;
 	Category mycategory[MAX];
+	readCategoriesFromFile( mycategory, 9999999 , "category.dat" );
 	do{
 		mainMenu();
 		scanf("%d",&choice);
 		switch(choice){
 			case 1:
-			  manageCategory(mycategory ,size );
+				system("cls");
+			    manageCategory(mycategory ,size );
 				break;
 			case 2: 
-			 //manageProduct();
+			system("cls");
+			    //manageProduct();
+			    
 			break;
 			case 0 :
 				printf("Thoat chuong trinh ");
-				break;
+		     	break;
 		}
 	}while(choice!=0);
 }

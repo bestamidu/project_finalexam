@@ -5,6 +5,6 @@
 
 void mainMenu();
 void manageCategory(Category mycategory[], int size);
-
+void sortMenu();
 
 #endif

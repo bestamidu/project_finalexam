@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "function.h"
 #include "datatype.h"
+#include <stdlib.h>
 void mainMenu(){
     printf("\n========================================\n");
     printf("         %s\n", "HE THONG QUAN LY CUA HANG ");
@@ -35,27 +36,43 @@ void manageCategory(Category mycategory[], int size){
     
     switch(categorychoice){
     	case 1 :
+    	system("cls");
+        
 		showCategoryList(mycategory,size);
+		
 		break;
 		
 		case 2 : 
+		system("cls");
 		addCategory(mycategory, &size);
+		
 		break;
 		
 		case 3:
+			system("cls");
 	    editCategory(mycategory ,size);	
+	    
 		break;
 		
 		case 4:
+			system("cls");
+			deleteCategory(mycategory,&size);
+			
 		break;
 		
 		case 5:
+			system("cls");
+	    findCategory(mycategory,size);
+	    
 		break;
 		
 		case 6:
+			system("cls");
+		 sortCategoryname(mycategory,size);
 		break;
 
 		case 0 : 
+		system("cls");
 		printf("quay lai chuong trinh\n ");
 		return;
 		default:
@@ -66,3 +83,10 @@ void manageCategory(Category mycategory[], int size){
      }while(categorychoice!=0);
 }
 //void manageProduct();
+ void sortMenu(){
+ 	 printf("Nhap thu tu sap xep\n");
+	 printf("\n1. Sap xep tang dan\n");
+	 printf("\n2. Sap xep giam dan\n ");
+	 printf("Lua chon cua ban la :");
+ }
+ 
