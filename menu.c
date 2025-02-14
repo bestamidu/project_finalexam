@@ -33,7 +33,7 @@ void manageCategory(Category mycategory[], int size){
     printf("%s", "MOI NHAP LUA CHON CHUC NANG CUA BAN: "); 
     scanf("%d",&categorychoice);
     printf("========================================");
-    
+    fflush(stdin);
     switch(categorychoice){
     	case 1 :
     	system("cls");
@@ -89,4 +89,7 @@ void manageCategory(Category mycategory[], int size){
 	 printf("\n2. Sap xep giam dan\n ");
 	 printf("Lua chon cua ban la :");
  }
- 
+ void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);  // Clear the buffer
+}

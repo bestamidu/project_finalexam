@@ -12,6 +12,7 @@ int main(){
 	do{
 		mainMenu();
 		scanf("%d",&choice);
+		fflush(stdin);
 		switch(choice){
 			case 1:
 				system("cls");

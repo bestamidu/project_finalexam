@@ -22,22 +22,9 @@ void showCategoryList(Category mycategory[], int size) {
     }
 
     printf("===========================================\n");
-    char choice;
-    do{
-         printf("\nGo back (b)? or Exit (0)?: ");
-          while (getchar() != '\n');
-    	scanf("%c",&choice);
-    	if(choice=='b'){
-    		return;
-		}else if(choice=='0'){
-			exit(0);
-		}else {
-            printf("Lua chon khong hop le. Vui long nhap lai.\n");
-	
-	}
-    }while(1);
+    //goBackOrExit();
 }
-    void addCategory(Category mycategory[] , int *size ){
+void addCategory(Category mycategory[] , int *size ){
 	if (*size >= MAX ){
 		printf("SO LUONG THEM DA DU ");
 		return; 
@@ -47,8 +34,8 @@ void showCategoryList(Category mycategory[], int size) {
         printf("\nNhap ID cua category (toi da 5 ky tu): ");
         fgets(newCategory.categoryId, sizeof(newCategory.categoryId), stdin);
         newCategory.categoryId[strcspn(newCategory.categoryId, "\n")] = 0; 
-
-        if (strlen(newCategory.categoryId) == 0) {
+		
+        if (newCategory.categoryId[0] == '\0') {
             printf("ID khong duoc de trong. Vui long nhap lai.\n");
         }
     } while (strlen(newCategory.categoryId) == 0);
@@ -63,7 +50,7 @@ void showCategoryList(Category mycategory[], int size) {
         }
     } while (strlen(newCategory.categoryName) == 0);
 
-    if (checkDuplicateId(mycategory, *size, newCategory.categoryId, newCategory.categoryName)) {
+    if (isDuplicateCategory(mycategory, *size, newCategory.categoryId, newCategory.categoryName, 1)) {
         printf("ID hoac ten danh muc da ton tai. Vui long nhap lai.\n");
         return;
     }
@@ -73,19 +60,7 @@ void showCategoryList(Category mycategory[], int size) {
 	writeToFile("categories.dat", mycategory, *size);
 	printf("\nban da them ID va Name thanh cong cho category!!!\n");
     printf("\n============================================\n");
-      char choice;
-    do{
-         printf("\nGo back (b)? or Exit (0)?: ");
-    	scanf("%c",&choice);
-    	if(choice=='b'){
-    		return;
-		}else if(choice=='0'){
-			exit(0);
-		}else {
-            printf("Lua chon khong hop le. Vui long nhap lai.\n");
-	
-	}
-    }while(1);
+    goBackOrExit();
 }
     
 void editCategory(Category mycategory[], int size) {
@@ -108,7 +83,6 @@ void editCategory(Category mycategory[], int size) {
            char newName[50];
             fgets(newName, sizeof(newName), stdin);
             newName[strcspn(newName, "\n")] = 0; 
-
            while (strlen(newName) == 0) {
                 printf("NAME khong duoc de trong. Vui long nhap lai: ");
                 fgets(newName, sizeof(newName), stdin);
@@ -116,7 +90,7 @@ void editCategory(Category mycategory[], int size) {
             }
 
             // Kiá»ƒm tra trÃ¹ng láº·p
-            if (isDuplicateCategory(mycategory, size, id, newName)){
+            if (isDuplicateCategory(mycategory, size, id, newName, 2)){
                 printf("Ten danh muc da ton tai. Vui long nhap lai.\n");
                 return;
             }
@@ -133,22 +107,10 @@ void editCategory(Category mycategory[], int size) {
     if (!found) {
         printf("Thong tin ID ban nhap khong chinh xac.\n");
     }
-    char choice;
-    do {
-        printf("\nGo back (b)? or Exit (0)?: ");
-        scanf(" %c", &choice);
-        while (getchar() != '\n'); // Xóa bộ đệm
-        if (choice == 'b') {
-            return;
-        } else if (choice == '0') {
-            exit(0);
-        } else {
-            printf("Lua chon khong hop le. Vui long nhap lai.\n");
-        }
-    } while (1);
+    goBackOrExit();
 }
 
-    void deleteCategory(Category mycategory[], int *size) {
+void deleteCategory(Category mycategory[], int *size) {
     if (*size == 0) {
         printf("⚠ Khong co danh muc nao de xoa!\n");
         return;
@@ -185,21 +147,9 @@ void editCategory(Category mycategory[], int size) {
  if(!found){
      printf("Id chua chinh xac");
      }
-     char deleteChoice;
-     do{
-     	 printf("\nGo back (b)? or Exit (0)?: ");
-     	 while (getchar() != '\n');
-     	 scanf(" %c ", &deleteChoice);
-     	 
-     	 if(deleteChoice=='b'){                  
-     
-		  }else if(deleteChoice=='0'){    
-		  }else{
-			  printf("Lua chon khong hop le. Vui long nhap lai.\n");
-			  }
-		  }while(1);
+     goBackOrExit();
 	}
- void sortCategoryname(Category mycategory[],int size){
+void sortCategoryname(Category mycategory[],int size){
  	if(size==0){
  		printf("Mang dang rong");
  		return;
@@ -207,7 +157,6 @@ void editCategory(Category mycategory[], int size) {
 	 int sortChoice;
 	 sortMenu(); 
 	 scanf("%d",&sortChoice);
-	 getchar();
 	 
 	 for(int i =0 ; i < size-1 ; i++){
 	 	for ( int j =0 ; j < size -i-1 ; i++){
@@ -221,18 +170,7 @@ void editCategory(Category mycategory[], int size) {
 	 }
 	 printf("Ban da sap xep thanh cong!!!");
 	 showCategoryList(mycategory,size);
-	 char sortchoice;
-	 do{
-	 printf("\nGo back (b)? or Exit (0)?: ");
-	 while (getchar() != '\n');
-	 scanf(" %c", &sortchoice);
-	 if(sortchoice== 'b'){
-	 	return;                          
-	 }else if( sortchoice == '0'){
-	 }else{
-	 	printf("Lua chon khong hop le. Vui long nhap lai.\n");
-	 }
-	 }while(1);
+	 goBackOrExit();
  }
  void findCategory(Category mycategory[], int size){
     char searchName[50];
@@ -244,7 +182,7 @@ void editCategory(Category mycategory[], int size) {
     }
 
     printf("Nhap ten category can tim: ");
-    while (getchar() != '\n');
+    
     fgets(searchName, sizeof(searchName), stdin);
     searchName[strcspn(searchName, "\n")] = 0;
 
@@ -264,27 +202,18 @@ void editCategory(Category mycategory[], int size) {
     if (!found) {
         printf("Ten can tim kiem khong hop le\n");
     }
-    char findchoice;
-    do{
-    printf("\nGo back (b)? or Exit (0)?: ");
-    fflush(stdin);
-    scanf(" %c", &findchoice);
-    while (getchar() != '\n'); 
-
-    if( findchoice== 'b' ){
-    	return;
-	}else if(findchoice =='0'){
-		exit(0);
-	}else{
-	printf("Lua chon khong hop le. Vui long nhap lai.\n");
-	}
-    }while(1);
+    goBackOrExit();
 }
 
-    int isDuplicateCategory(Category mycategory[], int size, char *id, char *name) {
+    int isDuplicateCategory(Category mycategory[], int size, char *id, char *name, int mode) {
     for (int i = 0; i < size; i++) {
-        if (strcmp(mycategory[i].categoryId, id) == 0 && strcmp(mycategory[i].categoryName, name) == 0) {
+        if (strcmp(mycategory[i].categoryId, id) == 0 && mode != 2) {//mode = 2 la sua thi khong check trung id
+//            printf("\nError: Trung Category ID [%s]\n", id);
             return 1;
+        }
+        if (strcmp(mycategory[i].categoryName, name) == 0) {
+//            printf("\nError: Trung Category Name [%s]!\n", name);
+            return 1; 
         }
     }
     return 0;
@@ -323,4 +252,21 @@ int readFromFile(const char *filename, Category *categories) {
         printf("Loi doc file!\n");
     }
     return size;  // Return the number of elements read
+}
+
+void goBackOrExit(){
+	char choice;
+    do {
+        printf("\nGo back (b)? or Exit (0)?: ");
+        fflush(stdin);
+        scanf(" %c", &choice);
+        while (getchar() != '\n'); // Xóa bộ đệm
+        if (choice == 'b') {
+            return;
+        } else if (choice == '0') {
+            exit(0);
+        } else {
+            printf("Lua chon khong hop le. Vui long nhap lai.\n");
+        }
+    } while (1);
 }
