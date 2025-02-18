@@ -12,4 +12,10 @@ void findCategory(Category mycategory[], int size);
 void writeToFile(const char *filename, Category *categories, int size);
 int readFromFile(const char *filename, Category *categories);
 void clearInputBuffer();
+void showProductList(Product myproduct[], int size);
+void addProduct( Product myproduct[] , int *size1);
+void editProduct(Product myproduct[],int size1);
+void deleteProduct(Product myproduct[],int *size1);
+void findProduct(Product myproduct[], int size1);
+void sortProduct(Product myproduct[],int size1);
 #endif

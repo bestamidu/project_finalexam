@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "globals.h"
 #include "menu.h"
 #include "datatype.h"
-#define MAX 50 
 #include "function.h"
 int main(){
 	int choice;
 	int size =0;
+	int size1=0;
 	Category mycategory[MAX];
-	size = readFromFile("categories.dat", mycategory);
+	Product myproduct[MAX];
+	size = readFromFile(CATEGORY_FILE_NAME, mycategory);
 	do{
 		mainMenu();
 		scanf("%d",&choice);
@@ -19,8 +21,8 @@ int main(){
 			    manageCategory(mycategory ,size );
 				break;
 			case 2: 
-			system("cls");
-			    //manageProduct();
+		    	system("cls");
+			    manageProduct(myproduct , size1 );
 			    
 			break;
 			case 0 :

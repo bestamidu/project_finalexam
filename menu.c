@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "globals.h"
 #include "menu.h"
 #include "function.h"
 #include "datatype.h"
@@ -82,7 +83,7 @@ void manageCategory(Category mycategory[], int size){
     
      }while(categorychoice!=0);
 }
-//void manageProduct();
+
  void sortMenu(){
  	 printf("Nhap thu tu sap xep\n");
 	 printf("\n1. Sap xep tang dan\n");
@@ -92,4 +93,70 @@ void manageCategory(Category mycategory[], int size){
  void clearInputBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);  // Clear the buffer
+}
+void manageProduct(Product  myproduct [], int size1){	
+    int productchoice;
+    do{
+    printf("\n========================================\n");
+    printf("         %s\n", "MENU QUAN LI SAN PHAM   ");
+    printf("| %-3s | %-25s |\n", "STT", "CHUC NANG");
+    printf("----------------------------------------\n");
+    printf("| %-3d | %-25s |\n", 1, "HIEN THI CAC SAN PHAM ");
+    printf("| %-3d | %-25s |\n", 2, "THEM CAC SAN PHAM  ");
+    printf("| %-3d | %-25s |\n", 3, "SUA CAC SAN PHAM ");
+    printf("| %-3d | %-25s |\n", 4, "XOA SAN PHAM ");
+    printf("| %-3d | %-25s |\n", 5, "TIM KIEM  SAN PHAM   ");
+    printf("| %-3d | %-25s |\n", 6, "SAP XEP SAN PHAM   ");
+    printf("| %-3d | %-25s |\n", 0, "QUAY LAI MAIN MENU");
+    printf("%s", "MOI NHAP LUA CHON CHUC NANG CUA BAN: "); 
+    scanf("%d",&productchoice);
+    printf("========================================");
+    fflush(stdin);
+    switch(productchoice){
+    	case 1 :
+    	system("cls");
+        showProductList(myproduct, size1 );
+		
+		
+		break;
+		
+		case 2 : 
+		system("cls");
+	    addProduct(myproduct ,&size1);
+		
+		break;
+		
+		case 3:
+			system("cls");
+	    editProduct(myproduct, size1);
+	    
+		break;
+		
+		case 4:
+			system("cls");
+		deleteProduct( myproduct,&size1);
+			
+		break;
+		
+		case 5:
+			system("cls");
+	    findProduct(myproduct, size1);
+	    
+		break;
+		
+		case 6:
+			system("cls");
+		sortProduct(myproduct, size1);
+		break;
+
+		case 0 : 
+		system("cls");
+		printf("quay lai chuong trinh\n ");
+		return;
+		default:
+		printf("Loi chuong trinh");
+			break;
+	}
+    
+     }while(productchoice != 0);
 }

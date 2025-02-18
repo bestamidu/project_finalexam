@@ -6,5 +6,5 @@
 void mainMenu();
 void manageCategory(Category mycategory[], int size);
 void sortMenu();
-
+void manageProduct(Product  myproduct [], int size1);
 #endif
